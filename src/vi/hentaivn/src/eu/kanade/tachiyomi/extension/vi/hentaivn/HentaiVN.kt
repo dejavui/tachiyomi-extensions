@@ -44,8 +44,7 @@ class HentaiVN : ParsedHttpSource(), ConfigurableSource {
 
     override val name = "HentaiVN"
 
-    private val defaultBaseUrl = "https://hentaivn.tv"
-    override val baseUrl = preferences.getString(PREF_KEY_BASE_URL, defaultBaseUrl)!!
+    override val baseUrl = "https://hentaivn.tv"
 
     private val domain = baseUrl.toHttpUrl().host
     private val searchUrl = "$baseUrl/forum/search-plus.php"
@@ -350,20 +349,6 @@ class HentaiVN : ParsedHttpSource(), ConfigurableSource {
             }
         }.also(screen::addPreference)
 
-        EditTextPreference(screen.context).apply {
-            key = PREF_KEY_BASE_URL
-            title = TITLE_BASE_URL
-            summary = SUMMARY_BASE_URL
-
-            setDefaultValue(defaultBaseUrl)
-            dialogTitle = TITLE_BASE_URL
-
-            setOnPreferenceChangeListener { _, _ ->
-                Toast.makeText(screen.context, RESTART_TACHIYOMI, Toast.LENGTH_LONG).show()
-                true
-            }
-        }.also(screen::addPreference)
-
         ListPreference(screen.context).apply {
             key = PREF_KEY_RANDOM_UA
             title = TITLE_RANDOM_UA
@@ -659,10 +644,6 @@ class HentaiVN : ParsedHttpSource(), ConfigurableSource {
         const val PREF_KEY_ENABLE_CLOUDFLARE_BYPASS = "enable_cloudflare"
         const val TITLE_ENABLE_CLOUDFLARE_BYPASS = "Kích hoạt bỏ qua Cloudflare"
         const val SUMMARY_ENABLE_CLOUDFLARE_BYPASS = "Nếu bật khi không cần thiết, có thể gây lỗi \"Bỏ qua Cloudflare thất bại\" giả."
-
-        const val PREF_KEY_BASE_URL = "override_base_url_${BuildConfig.VERSION_CODE}"
-        const val TITLE_BASE_URL = "Thay đổi tên miền"
-        const val SUMMARY_BASE_URL = "Thay đổi này là tạm thời và sẽ bị xoá khi cập nhật tiện ích mở rộng."
 
         const val PREF_KEY_RANDOM_UA = "pref_key_random_ua_"
         const val TITLE_RANDOM_UA = "Chuỗi đại diện người dùng ngẫu nhiên"
